@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My LIFF App</title>
-  <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+    <title>LIFF Form Sample</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
 <body>
-  <h1>Welcome to My LIFF App</h1>
-  <script>
-    async function initializeLiff(appId) {
-      try {
-        await liff.init({ liffId: appId });
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        }
-        // LIFF SDKの機能をここで使用できます。
-      } catch (error) {
-        console.error('LIFF Initialization failed', error);
-      }
-    }
+    <h1>LIFF Form Sample</h1>
+    <form id="myForm">
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="message">メッセージ:</label>
+        <input type="text" id="message" name="message"><br><br>
+        <button type="button" onclick="submitForm()">送信</button>
+    </form>
 
-    initializeLiff('2003429965-rZvm4pBW');
-  </script>
+    <script>
+    async function submitForm() {
+        const username = document.getElementById('username').value;
+        const message = document.getElementById('message').value;
+
+        // LIFFの初期化とユーザーIDの取得
+        await liff.init({ liffId: "2003429965-rZvm4pBW" });
+        const userId = liff.getContext().userId;
+
+        // GASのWebアプリURLにデータを送信
+        fetch('YOUR_GAS_WEB_APP_URL', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId, username, message }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.result === "success") {
+                liff.closeWindow(); // データ送信成功時にLIFFアプリを閉じる
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
 </body>
 </html>
