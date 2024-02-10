@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My LIFF App</title>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+</head>
+<body>
+  <h1>Welcome to My LIFF App</h1>
+  <script>
+    async function initializeLiff(appId) {
+      try {
+        await liff.init({ liffId: appId });
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        }
+        // LIFF SDKの機能をここで使用できます。
+      } catch (error) {
+        console.error('LIFF Initialization failed', error);
+      }
+    }
+
+    initializeLiff('2003429965-rZvm4pBW');
+  </script>
+</body>
+</html>
