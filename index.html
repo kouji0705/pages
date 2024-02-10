@@ -18,11 +18,11 @@
     async function submitForm() {
         const username = document.getElementById('username').value;
         const message = document.getElementById('message').value;
-
+        console.log('submitForm ====== username:', username);
         // LIFFの初期化とユーザーIDの取得
         await liff.init({ liffId: "2003429965-rZvm4pBW" });
         const userId = liff.getContext().userId;
-
+        console.log('submitForm ====== userId:', userId);
         // GASのWebアプリURLにデータを送信
         // fetch('https://script.google.com/macros/s/AKfycbxbdkotYcxHYzoZhFEjiYEY1QB5hFaJKz1rKXsc6Z0iTrdI0RJ28cl32KT1LcKRB8HpoQ/exec', {
         //     method: 'POST',
@@ -40,6 +40,7 @@
         // })
         // .catch(liff.closeWindow());
         liff.closeWindow(); 
+        console.log('submitForm ====== end')
     }
     </script>
 </body>
