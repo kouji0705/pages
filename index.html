@@ -38,8 +38,9 @@
                 liff.closeWindow(); // データ送信成功時にLIFFアプリを閉じる
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(liff.closeWindow());
     }
+        liff.closeWindow(); 
     </script>
 </body>
 </html>
