@@ -83,6 +83,8 @@
 
     <script>
         async function submitForm() {
+            const destination = document.getElementById('destination').value;
+            const transport = document.getElementById('transport').value;
             // LIFFの初期化とユーザーIDの取得
             await liff.init({ liffId: "2003429965-rZvm4pBW" });
             const userId = liff.getContext().userId;
@@ -94,7 +96,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId, username, message }),
+                body: JSON.stringify({ userId, destination, transport }),
             })
                 .then(response => response.json())
                 .then(data => {
