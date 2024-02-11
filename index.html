@@ -1,18 +1,83 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>LIFF Form Sample</title>
+    <title>みちくさ</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>LIFF Form Sample</h1>
+    <h1>目的地、交通手段、空き時間を教えてください</h1>
     <form id="myForm">
-        <label for="username">目的地</label>
-        <input type="text" id="username" name="username">梅田<br><br>
-        <label for="message">交通手段</label>
-        <input type="text" id="message" name="message">徒歩<br><br>
-        <label for="message">空き時間</label>
-        <input type="text" id="message" name="message">2時間<br><br>
+        <div class="form-group">
+            <label for="destination">目的地</label>
+            <input type="text" id="destination" name="destination" placeholder="梅田">
+        </div>
+        <div class="form-group">
+            <label for="transport">交通手段</label>
+            <select id="transport" name="transport">
+                <option value="徒歩">徒歩</option>
+                <option value="自転車">自転車</option>
+                <option value="車">車</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="freeTime">空き時間</label>
+            <select id="freeTime" name="freeTime">
+                <option value="30">30分</option>
+                <option value="60">1時間</option>
+                <option value="90">1時間30分</option>
+                <option value="120">2時間以上</option>
+            </select>
+        </div>
         <button type="button" onclick="submitForm()">送信</button>
     </form>
 
@@ -25,7 +90,7 @@
             await liff.init({ liffId: "2003429965-rZvm4pBW" });
             const userId = liff.getContext().userId;
             console.log('submitForm ====== userId:', userId);
-        
+
             // GASのWebアプリURLにデータを送信
             // FIXME: CORSエラーが発生する
             fetch('https://script.google.com/macros/s/AKfycbxbdkotYcxHYzoZhFEjiYEY1QB5hFaJKz1rKXsc6Z0iTrdI0RJ28cl32KT1LcKRB8HpoQ/exec', {
@@ -35,20 +100,21 @@
                 },
                 body: JSON.stringify({ userId, username, message }),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if(data.result === "success") {
-                    liff.closeWindow(); // データ送信成功時にLIFFアプリを閉じる
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                liff.closeWindow(); // データ送信失敗時にもLIFFアプリを閉じる
-            });
-        
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.result === "success") {
+                        liff.closeWindow(); // データ送信成功時にLIFFアプリを閉じる
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    liff.closeWindow(); // データ送信失敗時にもLIFFアプリを閉じる
+                });
+
             console.log('submitForm ====== end')
         }
-        </script>
+    </script>
 </body>
+
 </html>
