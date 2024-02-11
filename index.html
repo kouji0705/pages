@@ -7,10 +7,12 @@
 <body>
     <h1>LIFF Form Sample</h1>
     <form id="myForm">
-        <label for="username">ユーザー名:</label>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="message">メッセージ:</label>
-        <input type="text" id="message" name="message"><br><br>
+        <label for="username">目的地</label>
+        <input type="text" id="username" name="username">梅田<br><br>
+        <label for="message">交通手段</label>
+        <input type="text" id="message" name="message">徒歩<br><br>
+        <label for="message">空き時間</label>
+        <input type="text" id="message" name="message">2時間<br><br>
         <button type="button" onclick="submitForm()">送信</button>
     </form>
 
@@ -25,6 +27,7 @@
             console.log('submitForm ====== userId:', userId);
         
             // GASのWebアプリURLにデータを送信
+            // FIXME: CORSエラーが発生する
             fetch('https://script.google.com/macros/s/AKfycbxbdkotYcxHYzoZhFEjiYEY1QB5hFaJKz1rKXsc6Z0iTrdI0RJ28cl32KT1LcKRB8HpoQ/exec', {
                 method: 'POST',
                 headers: {
